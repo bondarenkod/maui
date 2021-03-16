@@ -38,6 +38,7 @@ namespace Microsoft.Maui.Hosting
 			{
 				{  typeof(IActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{  typeof(IButton), typeof(ButtonHandler) },
+				{  typeof(IEditor), typeof(EditorHandler) },
 				{  typeof(IEntry), typeof(EntryHandler) },
 				{  typeof(ILayout), typeof(LayoutHandler) },
 				{  typeof(ILabel), typeof(LabelHandler) },
