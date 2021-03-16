@@ -96,5 +96,10 @@ namespace Microsoft.Maui
 			var sp = fontManager.GetScaledPixel(font);
 			editText.SetTextSize(ComplexUnitType.Sp, sp);
 		}
+
+		public static void UpdateReturnType(this AppCompatEditText editText, IEntry entry)
+		{
+			editText.ImeOptions = entry.ReturnType.ToNative();
+		}
 	}
 }

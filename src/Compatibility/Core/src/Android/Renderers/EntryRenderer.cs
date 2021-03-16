@@ -396,6 +396,7 @@ namespace Microsoft.Maui.Controls.Compatibility.Platform.Android
 			}
 		}
 
+		[PortHandler]
 		void UpdateReturnType()
 		{
 			if (Control == null || Element == null)

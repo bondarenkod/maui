@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Android.Text;
+using Android.Views.InputMethods;
 using AndroidX.AppCompat.Widget;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.DeviceTests.Stubs;
 using Microsoft.Maui.Handlers;
 using Xunit;
-using AColor = global::Android.Graphics.Color;
+using AColor = Android.Graphics.Color;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -36,6 +37,31 @@ namespace Microsoft.Maui.DeviceTests
 				Assert.Equal(fontManager.DefaultTypeface, nativeEntry.Typeface);
 			else
 				Assert.NotEqual(fontManager.DefaultTypeface, nativeEntry.Typeface);
+		}
+
+		[Fact(DisplayName = "ReturnType Initializes Correctly")]
+		public async Task ReturnTypeInitializesCorrectly()
+		{
+			var xplatReturnType = ReturnType.Next;
+			var entry = new EntryStub()
+			{
+				Text = "Test",
+				ReturnType = xplatReturnType
+			};
+
+			ImeAction expectedValue = ImeAction.Next;
+
+			var values = await GetValueAsync(entry, (handler) =>
+			{
+				return new
+				{
+					ViewValue = entry.ReturnType,
+					NativeViewValue = GetNativeReturnType(handler)
+				};
+			});
+
+			Assert.Equal(xplatReturnType, values.ViewValue);
+			Assert.Equal(expectedValue, values.NativeViewValue);
 		}
 
 		AppCompatEditText GetNativeEntry(EntryHandler entryHandler) =>
@@ -84,5 +110,8 @@ namespace Microsoft.Maui.DeviceTests
 
 		bool GetNativeIsItalic(EntryHandler entryHandler) =>
 			GetNativeEntry(entryHandler).Typeface.IsItalic;
+
+		ImeAction GetNativeReturnType(EntryHandler entryHandler) =>
+			GetNativeEntry(entryHandler).ImeOptions;
 	}
 }
